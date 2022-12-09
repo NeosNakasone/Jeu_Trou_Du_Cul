@@ -194,11 +194,14 @@ class Player(Deck):
 
         print('Fin de la partie')
         print(f"Tableau des scores : {self.score}")
-        for score_data in self.score:
+        point_all_players=len(self.point)
+        for score_data in self.point:
 
-            if score_data[1] >= 2:
+            if score_data[1] == point_all_players-1:
                 score_data.append('Président')
-            elif score_data[1] > 0:
+
+            elif score_data[1]==point_all_players-2:
+
                 score_data.append('vice-président')
             else:
                 score_data.append('trou du cul')
