@@ -3,16 +3,16 @@ import random
 from tabulate import tabulate
 import pyfiglet
 
-
 """
 @class Pyfliglet()
 Affichage du text<Jeu President -Trou du Coup-> avec <<ASCII art fonts>>
 """
+
+
 class Pyfliglet():
     def pyfliglet(self):
         GAME = pyfiglet.figlet_format("Jeu President -Trou  du  Cul -")
         print(GAME)
-
 
 
 class Player(Deck):
@@ -42,6 +42,7 @@ class Player(Deck):
     Système d'inscription de joueurs en entrant le nom
     pas de systeme de vérification de valeur entrée par un joueur 
     """
+
     def name_player(self):
         while ((self.nb_player < self.MAX_PLAYER) and (self.addPlayer == True)):
             name = input("Entrer your name :")
@@ -68,12 +69,12 @@ class Player(Deck):
 
     # Partie du code qui distribut les carte selon le nombre de joueurs
 
-
     """
     @hand()
     Cette fonction  qui permet de distribuer les cartes selon le nombre
      de joueurs inscrits
     """
+
     def hand(self):
         nb_card_by_player = self.NB_CARD // self.nb_player
 
@@ -92,12 +93,14 @@ class Player(Deck):
                 if self.NB_CARD > 0:
                     hand.append(random_carte[self.NB_CARD - 1])
                     self.NB_CARD -= 1
+
     """
     Méthode pour fusion les deux listes qui contiennent les noms des joueurs et leur cartes
     pour avoir une formule:
      example => {"player1" :[cards],"player2" :[cards]}
-    
+
     """
+
     def player_cards(self):
         player_name = self.names
         player_hands = self.hands
@@ -207,17 +210,17 @@ class Player(Deck):
         print(f" tableau des scors ====>{self.score}")
         for score_data in self.score:
 
-            if score_data[1] >=2:
+            if score_data[1] >= 2:
                 score_data.append('Président')
-            elif score_data[1]>0:
+            elif score_data[1] > 0:
                 score_data.append('vice-président')
             else:
                 score_data.append('trou du cul')
 
-            print(tabulate([["Player","Point","Titre"], score_data], tablefmt="github"))
+            print(tabulate([["Player", "Point", "Titre"], score_data], tablefmt="github"))
 
 
-decoration= Pyfliglet()
+decoration = Pyfliglet()
 decoration.pyfliglet()
 
 play = Player()
