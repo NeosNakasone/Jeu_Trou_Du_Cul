@@ -107,9 +107,6 @@ class Player(Deck):
         dict_hand_and_name = dict(zip(player_name, player_hands))
         return dict_hand_and_name
 
-    # TODO le joueur qui commence la partie:
-
-
     def partie(self):
 
         chosen_card = []
@@ -117,7 +114,7 @@ class Player(Deck):
         cards_of_player = self.player_cards()
         for name_player, cards in enumerate(cards_of_player):
             print(f" card of players {cards} ===>{cards_of_player[cards]}")
-        nb_cards_parts = 52  # pour qu'on puisse boucler tant qu'il y'a des cartes dans la main des joueur
+        nb_cards_parts = 52
 
         while nb_cards_parts > 0:
             first_player = self.names[0]
@@ -127,10 +124,7 @@ class Player(Deck):
             print(f" Numero de tour: {self.nb_run}")
             print("*" * 80)
 
-            # parcourir les players = une manche
-
             while (player_playing < self.nb_player):
-                # PARCOURIR LA MAIN DU PREMIER JOUEUR
 
                 if player_playing == 0:
                     card_of_first_player = cards_of_player[first_player]
@@ -144,9 +138,8 @@ class Player(Deck):
                         print(f"Carte choisie {chosen_card}")
                         cards_of_player[first_player].remove(chosen_card)
 
-                        # retirer immediatemennt  le player
                         if len(card_of_first_player) == 0:
-                            # self.names.remove(self.names[0])
+
                             save_names_delete.append(self.names[0])
                             self.score.append([first_player, self.nb_player - 1])
                             nb_winner += 1
@@ -159,13 +152,12 @@ class Player(Deck):
                     player_playing += 1
                 else:
 
-                    # PARCOURIR LES MAINS DES AUTRES JOUEURS
                     next_player = self.names[player_playing]
                     card_of_current_player = cards_of_player[next_player]
                     if len(card_of_current_player) > 0:
                         i = 0
                         find = False
-                        # parcourir les cartes du joueur qui joue
+
                         while i < (len(card_of_current_player)) and find == False:
                             if (card_of_current_player[i][0] >= chosen_card_value):
 
@@ -186,7 +178,6 @@ class Player(Deck):
                                 nb_cards_parts -= 1
 
                             i = i + 1
-                            # si j'atteints la fin du tableau et que que je n'ai rien trouvé, je vais chercher les valeurs supperieurs
 
                         print(f"Cartes restantes {player_playing}{card_of_current_player}")
                     else:
