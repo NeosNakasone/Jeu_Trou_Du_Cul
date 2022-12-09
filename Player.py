@@ -11,7 +11,7 @@ Affichage du text<Jeu President -Trou du Coup-> avec <<ASCII art fonts>>
 
 class Pyfliglet():
     def pyfliglet(self):
-        GAME = pyfiglet.figlet_format("Jeu President -Trou  du  Cul -")
+        GAME = pyfiglet.figlet_format("Jeu President -Trou  du  Cul-")
         print(GAME)
 
 
@@ -30,13 +30,6 @@ class Player(Deck):
     hands = []
     addPlayer = True
 
-    # Récupérer les cartes des deux tableaux qui se trouve dans la class Deck
-
-    # print(f" randomecarddddddddd  ===>{Deck().get_element()}")
-    # Melange les carte des deux tableaux => get_element
-    # shuffle = Deck().shuffle()
-
-    # Partie du code qui gère l'entrée des joueurs dans la partie
     """
     @name_player()
     Système d'inscription de joueurs en entrant le nom
@@ -45,9 +38,16 @@ class Player(Deck):
 
     def name_player(self):
         while ((self.nb_player < self.MAX_PLAYER) and (self.addPlayer == True)):
-            name = input("Entrer your name :")
+            """
+            Pour une version avec choix auto des noms mais, problème de bug si on dépasse les 3 joueurs..
+            
+            ia = ["Macron", "Trump", "Poutine", "Jinping", "Kim Jong-Il", "Zelensky"]
+            name = random.choice(ia)
+            
+            """
+            name = input("Entrer your name : ")
             if name == "":
-                print('pas de valeur entrée :')
+                print('pas de valeur entrée : ')
                 break
 
             self.names.append(name)
@@ -55,7 +55,7 @@ class Player(Deck):
 
             if self.nb_player >= self.MIN_PLAYER and self.nb_player < self.MAX_PLAYER:
                 print(f" Vous êtes : {str(self.nb_player)} joueurs !! vous pouvez commencez une partie ")
-                self.choice = input(" Votre choix : oui ou non : ")
+                self.choice = input(" oui : pour jouer | non : pour ajouter un joueur : ")
 
                 if self.choice == "oui":
                     print("let's play")
@@ -66,8 +66,6 @@ class Player(Deck):
             if (self.nb_player == (self.MAX_PLAYER)):
                 print("la partie peut commencer")
                 print(self.nb_player)
-
-    # Partie du code qui distribut les carte selon le nombre de joueurs
 
     """
     @hand()
@@ -111,7 +109,6 @@ class Player(Deck):
 
     # TODO le joueur qui commence la partie:
 
-    # premier joueur inscrit , commence !
 
     def partie(self):
 
@@ -127,7 +124,7 @@ class Player(Deck):
             nb_winner = 0
             save_names_delete = []
 
-            print(f" Numero de tour:==>{self.nb_run}")
+            print(f" Numero de tour: {self.nb_run}")
             print("*" * 80)
 
             # parcourir les players = une manche
@@ -137,7 +134,7 @@ class Player(Deck):
 
                 if player_playing == 0:
                     card_of_first_player = cards_of_player[first_player]
-                    print(f"Joueur==>{first_player}")
+                    print(f"Joueur: {first_player}")
                     if len(card_of_first_player) > 0:
 
                         chosen_card = random.choice(card_of_first_player)
@@ -186,8 +183,6 @@ class Player(Deck):
                                     nb_winner += 1
                                     self.score.append([next_player, self.nb_player - nb_winner])
 
-                                # retirer immediatemennt  le player
-
                                 nb_cards_parts -= 1
 
                             i = i + 1
@@ -195,9 +190,9 @@ class Player(Deck):
 
                         print(f"Cartes restantes {player_playing}{card_of_current_player}")
                     else:
-                        print(f" joueur pas de carte à jouer  ")
+                        print(f"joueur pas de carte à jouer  ")
                     player_playing += 1
-                    print(f"nombre de joueur {player_playing}")
+                    print(f"nombre de joueur : {player_playing}")
             self.nb_run += 1
             if nb_winner > 0:
                 self.nb_player = self.nb_player - nb_winner
@@ -207,7 +202,7 @@ class Player(Deck):
             player_playing = 0
 
         print('Fin de la partie')
-        print(f" tableau des scors ====>{self.score}")
+        print(f"Tableau des scores : {self.score}")
         for score_data in self.score:
 
             if score_data[1] >= 2:
