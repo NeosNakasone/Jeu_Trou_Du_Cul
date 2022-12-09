@@ -1,6 +1,19 @@
 from Deck import Deck
 import random
 from tabulate import tabulate
+import pyfiglet
+
+
+"""
+@class Pyfliglet()
+Affichage du text<Jeu President -Trou du Coup-> avec <<ASCII art fonts>>
+"""
+class Pyfliglet():
+    def pyfliglet(self):
+        GAME = pyfiglet.figlet_format("Jeu President -Trou  du  Cul -")
+        print(GAME)
+
+
 
 class Player(Deck):
 
@@ -24,7 +37,11 @@ class Player(Deck):
     # shuffle = Deck().shuffle()
 
     # Partie du code qui gère l'entrée des joueurs dans la partie
-
+    """
+    @name_player()
+    Système d'inscription de joueurs en entrant le nom
+    pas de systeme de vérification de valeur entrée par un joueur 
+    """
     def name_player(self):
         while ((self.nb_player < self.MAX_PLAYER) and (self.addPlayer == True)):
             name = input("Entrer your name :")
@@ -34,6 +51,7 @@ class Player(Deck):
 
             self.names.append(name)
             self.nb_player += 1
+
             if self.nb_player >= self.MIN_PLAYER and self.nb_player < self.MAX_PLAYER:
                 print(f" Vous êtes : {str(self.nb_player)} joueurs !! vous pouvez commencez une partie ")
                 self.choice = input(" Votre choix : oui ou non : ")
@@ -50,6 +68,12 @@ class Player(Deck):
 
     # Partie du code qui distribut les carte selon le nombre de joueurs
 
+
+    """
+    @hand()
+    Cette fonction  qui permet de distribuer les cartes selon le nombre
+     de joueurs inscrits
+    """
     def hand(self):
         nb_card_by_player = self.NB_CARD // self.nb_player
 
@@ -68,9 +92,12 @@ class Player(Deck):
                 if self.NB_CARD > 0:
                     hand.append(random_carte[self.NB_CARD - 1])
                     self.NB_CARD -= 1
-
-    # Methode pour fusion les deux listes qui contiennent les noms des joueurs et leur cartes
-    # {name:[cards]
+    """
+    Méthode pour fusion les deux listes qui contiennent les noms des joueurs et leur cartes
+    pour avoir une formule:
+     example => {"player1" :[cards],"player2" :[cards]}
+    
+    """
     def player_cards(self):
         player_name = self.names
         player_hands = self.hands
@@ -91,14 +118,13 @@ class Player(Deck):
         for name_player, cards in enumerate(cards_of_player):
             print(f" card of players {cards} ===>{cards_of_player[cards]}")
         nb_cards_parts = 52  # pour qu'on puisse boucler tant qu'il y'a des cartes dans la main des joueur
-        # tant qu'il y'a une carte en main
-        # while (nb_cards_parts>0 and self.nb_run <16 ):
+
         while nb_cards_parts > 0:
             first_player = self.names[0]
             nb_winner = 0
             save_names_delete = []
 
-            print(f" Numero de manche:==>{self.nb_run}")
+            print(f" Numero de tour:==>{self.nb_run}")
             print("*" * 80)
 
             # parcourir les players = une manche
@@ -108,7 +134,6 @@ class Player(Deck):
 
                 if player_playing == 0:
                     card_of_first_player = cards_of_player[first_player]
-                    # !!!!!!!!!!!!!!!!!!!!!!!!faire un system de choix de carte à prpoôser
                     print(f"Joueur==>{first_player}")
                     if len(card_of_first_player) > 0:
 
@@ -135,13 +160,12 @@ class Player(Deck):
                 else:
 
                     # PARCOURIR LES MAINS DES AUTRES JOUEURS
-                    # TODO  FAIRE LA COMPARAISON  DES CARTES CHOISI PAR LES JOUEURS
                     next_player = self.names[player_playing]
                     card_of_current_player = cards_of_player[next_player]
                     if len(card_of_current_player) > 0:
                         i = 0
                         find = False
-                        # parcourir les cartes du current player
+                        # parcourir les cartes du joueur qui joue
                         while i < (len(card_of_current_player)) and find == False:
                             if (card_of_current_player[i][0] >= chosen_card_value):
 
@@ -167,8 +191,6 @@ class Player(Deck):
                             # si j'atteints la fin du tableau et que que je n'ai rien trouvé, je vais chercher les valeurs supperieurs
 
                         print(f"Cartes restantes {player_playing}{card_of_current_player}")
-
-                        # TODO  AJOUTER SYSTEME DE SELECTION DE CARTE  DEPUIS
                     else:
                         print(f" joueur pas de carte à jouer  ")
                     player_playing += 1
@@ -183,14 +205,20 @@ class Player(Deck):
 
         print('Fin de la partie')
         print(f" tableau des scors ====>{self.score}")
-        for data in self.score:
+        for score_data in self.score:
+
+            if score_data[1] >=2:
+                score_data.append('Président')
+            elif score_data[1]>0:
+                score_data.append('vice-président')
+            else:
+                score_data.append('trou du cul')
+
+            print(tabulate([["Player","Point","Titre"], score_data], tablefmt="github"))
 
 
-            print(tabulate([["player", "Title"], data], headers="firstrow"))
-
-# TODO add_to_hand()  methode pour  ajouter carte à une main suite un manche de jouer
-# TODO remove_from_hand() methode pour  supprimer une carte d'une main suite un manche de jouer
-# TODO play()
+decoration= Pyfliglet()
+decoration.pyfliglet()
 
 play = Player()
 play.name_player()
